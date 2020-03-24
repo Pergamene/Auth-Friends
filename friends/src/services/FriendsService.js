@@ -1,10 +1,18 @@
 import axios from 'axios';
 
-const baseURL = new URL('http://localhost:5000/');
-
 class FriendsService {
   async friendsLogin(credentials) {
-    const response = await this._createBaseRequest().post(baseURL + 'api/login', credentials);
+    const response = await this._createBaseRequest().post('api/login', credentials);
+    return response;
+  }
+
+  async fetchFriends() {
+    const response = await this._createBaseRequest().get('api/friends');
+    return response;
+  }
+
+  async addFriend(friend) {
+    const response = await this._createBaseRequest().post('api/friends', friend);
     return response;
   }
 

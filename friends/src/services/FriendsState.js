@@ -9,6 +9,17 @@ class FriendsState {
     }
     return false;
   }
+
+  async fetchFriends(setFriends) {
+    const response = await FriendsService.fetchFriends();
+    setFriends(response.data);
+  }
+
+  async addFriend(friend, setFriend) {
+    const response = await FriendsService.addFriend(friend);
+    console.log('RESPONSE (in addFriend): ', response);
+    setFriend(response.data);
+  }
 }
 
 export default new FriendsState();
