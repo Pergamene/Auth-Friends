@@ -14,12 +14,12 @@ const useStyles = makeStyles({
 
 const FriendsList = props => {
   const classes = useStyles();
-  const { friends } = props;
+  const { friends, setFriends, setEditFriend } = props;
 
   return (
     <div className={classes.root}>
       {friends && friends.map(friend => {
-        return <Friend data={friend} key={friend.id} />;
+        return <Friend data={friend} setFriends={setFriends} setEditFriend={setEditFriend} key={friend.id} />;
       })}
     </div>
   );

@@ -16,6 +16,17 @@ class FriendsService {
     return response;
   }
 
+  async deleteFriend(id) {
+    const response = await this._createBaseRequest().delete('api/friends/' + id);
+    return response;
+  }
+
+  async editFriend(friend) {
+    const { name, age, email, id } = friend;
+    const response = await this._createBaseRequest().put('api/friends/' + id, {name, age, email});
+    return response;
+  }
+
   _createBaseRequest() {
     const token = JSON.parse(localStorage.getItem('token'));
     return axios.create({

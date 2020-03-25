@@ -15,10 +15,35 @@ class FriendsState {
     setFriends(response.data);
   }
 
-  async addFriend(friend, setFriend) {
+  async addFriend(friend, setFriends) {
     const response = await FriendsService.addFriend(friend);
-    console.log('RESPONSE (in addFriend): ', response);
-    setFriend(response.data);
+    setFriends(response.data);
+  }
+
+  async deleteFriend(id, setFriends) {
+    const response = await FriendsService.deleteFriend(id);
+    setFriends(response.data);
+  }
+
+  async cancelEditFriend(setEditFriend) {
+    this._resetEditFriend(setEditFriend);
+  }
+
+  async editFriend(friend, setFriends, setEditFriend) {
+    const response = await FriendsService.editFriend(friend);
+    setFriends(response.data);
+    this._resetEditFriend(setEditFriend);
+  }
+
+  _resetEditFriend(setEditFriend) {
+    setEditFriend({
+      editing: false,
+      friend: {
+        name: '',
+        age: '',
+        email: '',
+      },
+    });
   }
 }
 

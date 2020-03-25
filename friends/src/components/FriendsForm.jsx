@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
 import FriendState from '../services/FriendsState';
+import FriendsState from '../services/FriendsState';
 
 const useStyles = makeStyles({
   root: {
@@ -15,10 +16,13 @@ const useStyles = makeStyles({
     margin: ' 20px auto',
     padding: '20px',
   },
+  editing: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
 });
 
 const emptyFriend = {
-  id: '',
   name: '',
   age: '',
   email: '',
@@ -26,8 +30,12 @@ const emptyFriend = {
 
 const FriendsForm = props => {
   const classes = useStyles();
-  const { setFriends } = props;
-  const [friend, setFriend] = useState(emptyFriend);
+  const { setFriends, editFriend, setEditFriend } = props;
+  const [friend, setFriend] = useState(editFriend.friend);
+
+  useEffect(() => {
+    setFriend(editFriend.friend);
+  }, [editFriend]);
 
   const handleChange = event => {
     setFriend({
@@ -40,6 +48,16 @@ const FriendsForm = props => {
     event.preventDefault();
     FriendState.addFriend(friend, setFriends);
     setFriend(emptyFriend);
+  };
+
+  const handleEdit = event => {
+    event.preventDefault();
+    FriendState.editFriend(friend, setFriends, setEditFriend);
+  };
+
+  const handleCancel = event => {
+    event.preventDefault();
+    FriendsState.cancelEditFriend(setEditFriend);
   };
 
   return (
@@ -67,11 +85,27 @@ const FriendsForm = props => {
         value={friend.email} 
         onChange={handleChange} 
       />
+      {editFriend.editing ? (
+        <div className={classes.editing}>
+          <Button
+            type="submit"
+            color="primary"
+            variant="contained"
+            onClick={handleEdit}
+          >Edit Friend</Button>
+          <Button
+            type="submit"
+            color="secondary"
+            variant="contained"
+            onClick={handleCancel}
+          >Cancel</Button>
+        </div>
+      ) : (
       <Button 
         type="submit"
         color="primary"
         variant="contained"
-      >Add Friend</Button>
+      >Add Friend</Button>)}
     </Paper>
   );
 };
