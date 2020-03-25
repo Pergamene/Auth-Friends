@@ -4,7 +4,6 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
-import FriendState from '../services/FriendsState';
 import FriendsState from '../services/FriendsState';
 
 const useStyles = makeStyles({
@@ -46,13 +45,13 @@ const FriendsForm = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    FriendState.addFriend(friend, setFriends);
+    FriendsState.addFriend(friend, setFriends);
     setFriend(emptyFriend);
   };
 
   const handleEdit = event => {
     event.preventDefault();
-    FriendState.editFriend(friend, setFriends, setEditFriend);
+    FriendsState.editFriend(friend, setFriends, setEditFriend);
   };
 
   const handleCancel = event => {
